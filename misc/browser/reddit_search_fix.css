@@ -1,0 +1,7 @@
+/* Used with Stylus */
+@-moz-document domain("old.reddit.com") {
+  .search-page #search,
+  .res .search-page #search {
+    transform: unset !important;
+  }
+}

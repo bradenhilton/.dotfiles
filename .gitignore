@@ -1,0 +1,15 @@
+i3/**/i3/config
+i3/**/i3status/config
+mpv/**/*.lua
+
+mpd/**/mpd/*
+!mpd/**/mpd/mpd.conf
+
+polybar/**/polybar/config
+polybar/**/polybar/launch.sh
+
+wal/.config/wal/colorschemes
+
+*backup*
+*-opkg
+*.save*

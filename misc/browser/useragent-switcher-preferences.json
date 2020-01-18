@@ -1,0 +1,18 @@
+{
+  "blacklist": [],
+  "cache": true,
+  "custom": {
+    "www.amazon.co.uk": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:69.0) Gecko/20100101 Firefox/69.0"
+  },
+  "exactMatch": false,
+  "faqs": false,
+  "last-update": 1577593409395,
+  "log": false,
+  "mode": "custom",
+  "parser": {},
+  "protected": [
+    "google.com/recaptcha",
+    "gstatic.com/recaptcha"
+  ],
+  "whitelist": []
+}

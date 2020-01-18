@@ -1,0 +1,34 @@
+#define fonts   xft:Fira Code:size=10, \
+                xft:Office Code Pro:size=10, \
+                xft:Font Awesome 5 Free:size=9:style=Regular:minspace=False, \
+                xft:Font Awesome 5 Free:size=9:style=Solid:minspace=False, \
+                xft:Font Awesome 5 Brands:size=9:style=Regular:minspace=False
+
+Xft.dpi: 92
+Xft.antialias: true
+Xft.hinting: true
+Xft.rgba: rgb
+Xft.autohint: false
+Xft.hintstyle: hintslight
+Xft.lcdfilter: lcddefault
+
+URxvt*font: fonts
+URxvt*boldFont: fonts
+URxvt.letterSpacing: -1
+URxvt.internalBorder: 10
+URxvt*depth: 32
+URxvt*scrollBar: false
+URxvt*cursorBlink: true
+
+URxvt.perl-ext-common: default,matcher,url-select
+URxvt.url-launcher: /usr/bin/xdg-open
+URxvt.matcher.button: 1
+URxvt.keysym.M-u: perl:url-select:select_next
+URxvt.url-select.underline: true
+URxvt.underlineURLs: true
+
+URxvt*keysym.Shift-Control-C: eval:selection_to_clipboard
+URxvt*keysym.Shift-Control-V: eval:paste_clipboard
+
+URxvt*iso14755: false
+URxvt*iso14755_52: false
