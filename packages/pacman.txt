@@ -52,8 +52,6 @@ network-manager-applet
 networkmanager
 noto-fonts
 noto-fonts-cjk
-noto-fonts-emoji
-noto-fonts-extra
 ntfs-3g
 numlockx
 nvidia
@@ -62,6 +60,7 @@ openbox
 os-prober
 otf-fira-code
 p7zip
+pacutils
 pavucontrol
 picom
 playerctl
@@ -84,6 +83,7 @@ thunderbird
 ttf-dejavu
 ttf-droid
 ttf-font-awesome
+ttf-joypixels
 ttf-liberation
 ttf-roboto
 ttf-ubuntu-font-family
