@@ -1,0 +1,14 @@
+# Requires: ffmpeg, ffprobe, PowerShell Core
+# Downloads best quality, writes/embeds English subs and sets the Date Modified file attribute to the video upload date (requires EditDateModified.ps1 script)
+--no-warnings
+#--no-overwrites
+--sub-lang "en,en-GB,enGB,en-US,enUS"
+--write-sub
+--embed-subs
+#--embed-thumbnail
+--format "bestvideo[ext=webm]+bestaudio[ext=webm]/bestvideo+bestaudio/best"
+--merge-output-format mkv
+--add-metadata
+--xattrs
+--exec 'powershell -ExecutionPolicy Bypass -File "%APPDATA%/youtube-dl/EditDateModified.ps1" {}'
+--output %(title)s.%(ext)s

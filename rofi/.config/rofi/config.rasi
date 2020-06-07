@@ -1,7 +1,0 @@
-configuration {
-  modi: "combi";
-  combi-modi: "drun,ssh,run";
-  theme: "~/.cache/wal/colors-rofi-dark.rasi";
-  font: "DejaVuSans 12";
-  show-icons: true;
-}
