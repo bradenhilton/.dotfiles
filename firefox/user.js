@@ -1,4 +1,6 @@
 user_pref('browser.aboutConfig.showWarning', false);
+user_pref('browser.download.lastDir', '$HOME/Downloads');
+user_pref('browser.download.lastDir.savePerSite', false);
 user_pref('browser.urlbar.clickSelectsAll', true);
 user_pref('browser.urlbar.doubleClickSelectsAll', false);
 user_pref(

@@ -1,0 +1,55 @@
+Gdk/UnscaledDPI 98304
+Gdk/WindowScalingFactor 1
+Gtk/AutoMnemonics 1
+Gtk/ButtonImages 1
+Gtk/CanChangeAccels 0
+Gtk/ColorPalette "black:white:gray50:red:purple:blue:light blue:green:yellow:orange:lavender:brown:goldenrod4:dodger blue:pink:light green:gray10:gray30:gray75:gray90"
+Gtk/ColorScheme ""
+Gtk/CursorBlinkTimeout 10
+Gtk/CursorThemeName "Adwaita"
+Gtk/CursorThemeSize 24
+Gtk/DecorationLayout "menu:close"
+Gtk/DialogsUseHeader 1
+Gtk/EnableAnimations 1
+Gtk/EnablePrimaryPaste 1
+Gtk/FontName "Cantarell 11"
+Gtk/IMModule ""
+Gtk/IMPreeditStyle "callback"
+Gtk/IMStatusStyle "callback"
+Gtk/KeynavUseCaret 0
+Gtk/KeyThemeName "Default"
+Gtk/MenuBarAccel "F10"
+Gtk/MenuImages 1
+Gtk/Modules "canberra-gtk-module"
+Gtk/OverlayScrolling 1
+Gtk/RecentFilesEnabled 1
+Gtk/RecentFilesMaxAge -1
+Gtk/SessionBusId "5f3a8cd0b30425d317e5fa5d5e3bd598"
+Gtk/ShellShowsAppMenu 0
+Gtk/ShellShowsDesktop 0
+Gtk/ShowInputMethodMenu 0
+Gtk/ShowUnicodeMenu 0
+Gtk/TimeoutInitial 200
+Gtk/TimeoutRepeat 20
+Gtk/TitlebarDoubleClick "toggle-maximize"
+Gtk/TitlebarMiddleClick "none"
+Gtk/TitlebarRightClick "menu"
+Gtk/ToolbarIconSize "large"
+Gtk/ToolbarStyle "both-horiz"
+
+Net/CursorBlink 1
+Net/CursorBlinkTime 1200
+Net/DndDragThreshold 8
+Net/DoubleClickTime 400
+Net/EnableEventSounds 1
+Net/EnableInputFeedbackSounds 0
+Net/FallbackIconTheme "gnome"
+Net/IconThemeName "Arc"
+Net/SoundThemeName "freedesktop"
+Net/ThemeName "Arc-Darker"
+
+Xft/Antialias 1
+Xft/DPI 98304
+Xft/Hinting 1
+Xft/HintStyle "hintslight"
+Xft/RGBA "none"

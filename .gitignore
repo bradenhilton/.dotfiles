@@ -1,5 +1,13 @@
+antibody/.zsh_plugins.sh
+
+firefox/**/userChrome.css
+firefox/**/99-remove_megabar.conf
+
+fontconfig/**/fontconfig/conf.d
+
 i3/**/i3/config
-i3/**/i3status/config
+i3status/**/i3status/config
+
 mpv/**/*.lua
 
 mpd/**/mpd/*
@@ -7,9 +15,16 @@ mpd/**/mpd/*
 
 polybar/**/polybar/config
 polybar/**/polybar/launch.sh
+polybar/**/polybar/scripts/info-redshift-temp.sh
+polybar/**/polybar/scripts/spotify_status.py
+polybar/**/polybar/scripts/updates-arch-combined.sh
 
 wal/.config/wal/colorschemes
 
+*test*
 *backup*
 *-opkg
 *.save*
+
+.vscode
+*.code-workspace

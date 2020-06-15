@@ -1,7 +1,7 @@
 alias ls='ls --color=auto'
 
-export VISUAL=code
 export EDITOR=nvim
+export VISUAL=code
 
 eval "$(starship init bash)"
 

@@ -1,0 +1,8 @@
+/* Used with Stylus */
+@-moz-document domain("www.keybr.com") {
+  .TextInput-fragment,
+  .Value,
+  .ValueDelta {
+    font-family: monospace !important;
+  }
+}

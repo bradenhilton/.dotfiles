@@ -1,0 +1,131 @@
+#!/usr/bin/env bash
+#
+# reload - reload dotfiles for a specified host
+#
+# requires: readlink
+#
+# this script will not work outside of a dotfiles directory
+# and is intended to be used with modular configuration files
+
+set -o errexit
+set -o nounset
+
+readonly NAME=$(basename "$0")
+readonly VER='2.0'
+readonly ARGS=("$@")
+
+readonly DOTFILES_DIR="$(dirname "$(readlink --canonicalize "$0")")"
+readonly PACKAGES=("i3" "i3status" "polybar")
+
+usage() {
+  cat <<- EOF
+  ${NAME} v${VER}
+
+  Reload various configuration files (dotfiles) for a given host type.
+
+  This script must be placed at the root of the dotfiles directory.
+
+  Modular configuration files should be placed within a conf.d directory
+  with a 2-digit index prefix ranging from 00 to 98 i.e. 00-keybinds.conf.
+  Host-specific configuration files should be prefixed with 99 and contain
+  the name of the host i.e. 99-desktop.conf.
+
+  USAGE: ${NAME} [OPTIONS]
+
+  OPTIONS:
+      -v, --version           show the script version number and exit
+      -d, --desktop           reload for a desktop host
+      -l, --laptop            reload for a laptop host
+      -h, --help              show this message and exit
+
+  EXAMPLES:
+      Reload files for desktop use:
+      ${NAME} -d
+
+      Reload files for laptop use:
+      ${NAME} -l
+EOF
+  exit 0
+}
+
+version() {
+  echo "${NAME} version ${VER}"
+  exit 0
+}
+
+reload() {
+  local host="$1"
+  local dir
+
+  echo "reloading configuration files..."
+
+  for package in "${PACKAGES[@]}"; do
+    echo -e "\treloading ${package} configuration for ${host}"
+    dir="${DOTFILES_DIR}/${package}/.config/${package}" # typical directory
+
+    ###########################################################################
+    # packages that require a different directory should be tested for here
+    # and dir should be re-assigned accordingly
+    ###########################################################################
+
+    ###########################################################################
+    # end of different directory checks
+    ###########################################################################
+
+
+    if [[ ! -d "${dir}" ]]; then
+      echo "error: no such directory at ${dir}"
+      continue
+    fi
+
+
+    ###########################################################################
+    # packages that require additional actions should be tested for here and 
+    # dealt with accordingly
+    ###########################################################################
+    # polybar additional action: cat host-specific launch script
+    if [[ "${package,,}" = "polybar" ]]; then
+      cat "${dir}"/scripts/launch-"${host}".sh > "${dir}"/launch.sh
+    fi
+    ###########################################################################
+    # end of additional action checks
+    ###########################################################################
+
+
+    # cat conf.d contents into main configuration file, to be performed last
+    cat "${dir}"/conf.d/[0-9][0-8]*.conf > "${dir}"/config
+    cat "${dir}"/conf.d/*"${host}".conf >> "${dir}"/config
+  done
+
+  echo "reloading configuration files...done"
+  exit 0
+}
+
+parse_args() {
+  if [[ ! "${#ARGS[@]}" -eq 1 ]]; then
+    usage
+  fi
+
+  case "${ARGS[0]}" in
+    -v|--version)
+      version
+      ;;
+    -d|--desktop)
+      reload desktop
+      ;;
+    -l|--laptop)
+      reload laptop
+      ;;
+    -h|--help)
+      usage
+      ;;
+    *)
+      usage
+      ;;
+  esac
+}
+
+main() {
+  parse_args
+}
+main

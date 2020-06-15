@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+#
+# set-light - set light GTK theme using xsettingsd
+#
+# requires: xsettingsd
+#
+# this script is primarily intended to be used with automathemely
+
+set -o errexit
+set -o nounset
+
+readonly XSETTINGSD_DIR="$HOME/.config/xsettingsd"
+
+main() {
+  xsettingsd -c "${XSETTINGSD_DIR}/light" &
+}
+main

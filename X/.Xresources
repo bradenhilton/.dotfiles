@@ -1,8 +1,5 @@
-#define fonts   xft:Fira Code:size=10, \
-                xft:Office Code Pro:size=10, \
-                xft:Font Awesome 5 Free:size=9:style=Regular:minspace=False, \
-                xft:Font Awesome 5 Free:size=9:style=Solid:minspace=False, \
-                xft:Font Awesome 5 Brands:size=9:style=Regular:minspace=False
+#define fonts   xft:Fira Code Retina:size=11, \
+                xft:Office Code Pro:size=11
 
 Xft.dpi: 92
 Xft.antialias: true

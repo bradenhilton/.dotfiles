@@ -2,6 +2,6 @@ configuration {
   modi: "combi";
   combi-modi: "drun,ssh,run";
   theme: "~/.cache/wal/colors-rofi-dark.rasi";
-  font: "DejaVuSans 12";
+  font: "SF Pro Display Regular 13";
   show-icons: true;
 }

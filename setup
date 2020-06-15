@@ -1,0 +1,201 @@
+#!/usr/bin/env bash
+#
+# setup - setup dotfiles using GNU Stow
+#
+# requires: readlink, reload (user script) , stow
+#
+# this script will not work outside of a dotfiles directory specifically
+# intended to be used with stow
+#
+# packages inside directories named "misc" and "ignore" will not be stowed
+
+set -o errexit
+set -o nounset
+
+readonly NAME=$(basename "$0")
+readonly VER='2.0'
+readonly ARGS=("$@")
+
+readonly DOTFILES_DIR="$(dirname "$(readlink --canonicalize "$0")")"
+declare -a PACKAGES=("${DOTFILES_DIR}"/*/)
+           PACKAGES=("${PACKAGES[@]%/}") # remove trailing slash
+           PACKAGES=("${PACKAGES[@]##*/}") # remove path prefix
+readonly PACKAGES
+
+readonly RELOAD="${DOTFILES_DIR}/reload"
+
+usage() {
+  cat <<- EOF
+  ${NAME} v${VER}
+
+  Setup various configuration files (dotfiles) for a given host type.
+
+  This script must be placed at the root of the dotfiles directory.
+  Packages inside directories named "misc" and "ignore" will not
+  be stowed.
+
+  USAGE: ${NAME} [OPTIONS]
+
+  OPTIONS:
+      -v, --version           show the script version number and exit
+      -d, --desktop           setup for a desktop host
+      -l, --laptop            setup for a laptop host
+      -u, --unstow            remove all dotfiles by unstowing them
+      -h, --help              show this message and exit
+
+  EXAMPLES:
+      Setup for desktop use:
+      ${NAME} -d
+
+      Remove all dotfiles:
+      ${NAME} -u
+EOF
+  exit 0
+}
+
+version() {
+  echo "${NAME} version ${VER}"
+  exit 0
+}
+
+# Firefox profiles require a different target directory than $HOME, this 
+# directory varies from install to install and is either randomly generated or
+# user defined. The profile directory can be found by parsing the installs.ini
+# file in the Firefox directory (~/.mozilla/firefox/installs.ini).
+firefox() {
+  local firefox_dir="$HOME/.mozilla/firefox"
+  local package_dir="${DOTFILES_DIR}/${package}"
+
+  # build userChrome.css from modular files in conf.d
+  if [[ -d "${package_dir}/chrome" ]]; then
+    cat "${package_dir}"/chrome/conf.d/[0-9][0-9]*.conf > \
+      "${package_dir}"/chrome/userChrome.css
+  fi
+
+  if [[ ! -d "${firefox_dir}" ]]; then
+    echo "error: unable to locate Firefox directory"
+    return 1
+  fi
+
+  if [[ -f "${firefox_dir}/installs.ini" ]]; then
+    # read the installs file in firefox_dir to get the default
+    # profile directory
+    local profile_dir
+    while IFS= read -r line; do
+      if [[ "${line}" = Default=* ]]; then
+        profile_dir="${line//Default=/}"
+        break
+      fi
+    done < "${firefox_dir}/installs.ini"
+
+    # test relative profile path
+    if [[ -d "${firefox_dir}/${profile_dir}" ]]; then
+      profile_dir="${firefox_dir}/${profile_dir}"
+    else
+      # throw error if directory is neither relative nor absolute
+      if [[ ! -d "${profile_dir}" ]]; then
+        echo "error: unable to locate Firefox profile directory"
+        return 1
+      fi
+    fi
+
+    # profile directory found, proceed to stow or unstow
+    if [[ "$1" = "stow" ]]; then
+      echo -e "\tstowing package: firefox"
+      stow --dir="${DOTFILES_DIR}" --restow --target="${profile_dir}" \
+        "${package}" > /dev/null 2>&1 &
+    return 0
+    elif [[ "$1" = "unstow" ]]; then
+      echo -e "\tunstowing package: firefox"
+      stow --dir="${DOTFILES_DIR}" --delete --target="${profile_dir}" \
+        "${package}" > /dev/null 2>&1 &
+    return 0
+    fi
+  else
+    echo "error: unable to locate ${firefox_dir}/installs.ini"
+    return 1
+  fi
+}
+
+stow_packages() {
+  echo "stowing packages..."
+
+  for package in "${PACKAGES[@]}"; do
+    if [[ "${package,,}" = "misc" || "${package,,}" = "ignore" ]]; then
+      continue
+    elif [[ "${package,,}" = "antibody" ]]; then
+      antibody bundle < "${DOTFILES_DIR}"/"${package}"/.zsh_plugins.txt > \
+        "${DOTFILES_DIR}"/"${package}"/.zsh_plugins.sh
+    elif [[ "${package,,}" = "firefox" ]]; then
+      firefox stow
+      continue
+    fi
+
+    echo -e "\tstowing package: ${package}"
+    stow --dir="${DOTFILES_DIR}" --restow --target="$HOME" "${package}" \
+      > /dev/null 2>&1 &
+  done
+
+  echo "stowing packages... done"
+  exit 0
+}
+
+unstow_packages() {
+  echo "unstowing packages..."
+
+  for package in "${PACKAGES[@]}"; do
+    if [[ "${package,,}" = "misc" || "${package,,}" = "ignore" ]]; then
+      continue
+    elif [[ "${package,,}" = "firefox" ]]; then
+      firefox unstow
+      continue
+    fi
+
+    echo -e "\tunstowing package: ${package}"
+    stow --dir="${DOTFILES_DIR}" --delete --target="$HOME" "${package}" \
+      > /dev/null 2>&1 &
+  done
+
+  echo "unstowing packages... done"
+  exit 0
+}
+
+parse_args() {
+  if [[ ! "${#ARGS[@]}" -eq 1 ]]; then
+    usage
+  fi
+
+  case "${ARGS[0]}" in
+    -v|--version)
+      version
+      ;;
+    -d|--desktop)
+      if [[ -f "${RELOAD}" ]]; then
+        ("${RELOAD}" --desktop)
+      fi
+      echo ""
+      stow_packages
+      ;;
+    -l|--laptop)
+      if [[ -f "${RELOAD}" ]]; then
+        ("${RELOAD}" --laptop)
+      fi
+      echo ""
+      stow_packages
+      ;;
+    -u|--unstow)
+      unstow_packages
+      ;;
+    -h|--help)
+      usage
+      ;;
+    *)
+      usage
+      ;;
+  esac
+}
+
+main() {
+  parse_args
+}
+main
