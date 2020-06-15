@@ -1,5 +1,11 @@
+Firefox/**/userChrome.css
+Firefox/**/99-remove_megabar.conf
+
 mpv/**/*.lua
 mpv/watch_later/*
 
 *backup*
 *.save*
+
+.vscode
+*.code-workspace
