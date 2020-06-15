@@ -2,7 +2,7 @@
 #
 # setup - setup dotfiles using GNU Stow
 #
-# requires: readlink, reload (user script) , stow
+# requires: readlink, reload (user script), stow
 #
 # this script will not work outside of a dotfiles directory specifically
 # intended to be used with stow

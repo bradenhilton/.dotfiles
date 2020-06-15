@@ -1,5 +1,7 @@
 antibody/.zsh_plugins.sh
 
+code
+
 firefox/**/userChrome.css
 firefox/**/99-remove_megabar.conf
 
@@ -7,6 +9,8 @@ fontconfig/**/fontconfig/conf.d
 
 i3/**/i3/config
 i3status/**/i3status/config
+
+jetbrains-toolbox
 
 mpv/**/*.lua
 
